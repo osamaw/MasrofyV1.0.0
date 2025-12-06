@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:masroofy/screens/login_screen.dart';
 import 'package:masroofy/screens/signup_screen.dart';
+import 'package:masroofy/utils/session_manager.dart';
 import 'models/user.dart';
 import 'models/expense.dart';
 import 'models/bill.dart';
@@ -23,9 +24,26 @@ void main() async {
   await Hive.openBox<Bill>('bills');
   await Hive.openBox<Installment>('installments');
   await Hive.openBox<Income>('income');
+  bool isLoggedIn = false;
+  
+  String? savedEmail = await SessionManager().getCachedEmail();
+
+  if (savedEmail != null) {
+    var userBox = Hive.box<User>('users');
+    
+    try {
+      User savedUser = userBox.values.firstWhere((u) => u.Email == savedEmail);
+      
+      SessionManager().currentUser = savedUser; 
+      
+      isLoggedIn = true;
+    } catch (e) {
+      isLoggedIn = false; 
+    }
+  }
 
   var userBox = Hive.box<User>('users');
-  runApp(MasroofyApp(isLoggedIn: userBox.isNotEmpty));
+  runApp(MasroofyApp(isLoggedIn: isLoggedIn));
 }
 
 class MasroofyApp extends StatelessWidget {

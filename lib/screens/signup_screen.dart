@@ -33,7 +33,7 @@ class _SignupState extends State<Signup> {
     if (_signupkey.currentState!.validate()) {
       var userBox = Hive.box<User>('users');
 
-      // Check if email already exists
+     
       if (userBox.values.any(
         (user) => user.Email == _mailController.text.trim(),
       )) {
@@ -206,7 +206,7 @@ class _SignupState extends State<Signup> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => const LoginScreen(),
                           ),

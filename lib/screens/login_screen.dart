@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _loginUser() {
+  Future<void> _loginUser() async {
     if (_loginKey.currentState!.validate()) {
       var userBox = Hive.box<User>('users');
       var email = _mailController.text.trim();
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (user != null) {
-        SessionManager().login(user); // Set current user session
+        await SessionManager().login(user); 
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => const Signup(),
                           ),
