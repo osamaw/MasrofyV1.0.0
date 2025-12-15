@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String? get currentUserEmail => SessionManager().currentUser?.Email;
-
+  String? get currentUserName => SessionManager().currentUser?.UserName;
   double get totalExpenses {
     final now = DateTime.now();
     return expenseBox.values
@@ -67,8 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _logout() {
     SessionManager().logout();
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const LoginScreen()),
+      (route) => false,
     );
   }
 
@@ -77,9 +78,63 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Masroofy Dashboard'),
-        actions: [
-          IconButton(icon: const Icon(Icons.logout), onPressed: _logout),
-        ],
+        backgroundColor: Colors.teal,
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            SizedBox(height: 50),
+            Image.asset("images/logo.png", width: 40),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.person),
+                title: Text("$currentUserName"),
+                subtitle: Text("$currentUserEmail"),
+              ),
+            ),
+            SizedBox(height: 20),
+
+             _DrawerButton("Settings", Icons.settings),
+            SizedBox(height: 20),
+
+            _DrawerButton("History", Icons.history),
+            SizedBox(height: 20),
+
+            _DrawerButton("About Us", Icons.question_mark),
+            SizedBox(height: 20),
+
+            _DrawerButton("Ai Assistant", Icons.assistant),
+            SizedBox(height: 20),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.logout,color: Colors.black,),
+              label: Text("Log out",style: TextStyle(color: Colors.black),),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red
+              ),
+              
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Log Out"),
+                      content: Text("Are You Sure ?"),
+                      actions: [
+                        ElevatedButton(onPressed: _logout, child: Text("Yes")),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("NO"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: ValueListenableBuilder(
         valueListenable: expenseBox.listenable(),
@@ -101,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             _buildSummaryCard(
                               'Remaining Balance',
                               remainingBalance,
-                              Colors.green,
+                              const Color.fromARGB(255, 22, 81, 24),
                             ),
                             const SizedBox(height: 16),
                             Row(
@@ -110,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: _buildSummaryCard(
                                     'Monthly Expenses',
                                     totalExpenses,
-                                    Colors.redAccent,
+                                    const Color.fromARGB(255, 123, 1, 1),
                                   ),
                                 ),
                                 const SizedBox(width: 16),
@@ -118,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: _buildSummaryCard(
                                     'Bills + Installments',
                                     totalBillsAndInstallments,
-                                    Colors.orange,
+                                    const Color.fromARGB(255, 210, 130, 9),
                                   ),
                                 ),
                               ],
@@ -215,6 +270,15 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(vertical: 16),
         textStyle: const TextStyle(fontSize: 18),
       ),
+    );
+  }
+
+  Widget _DrawerButton(String? title, IconData icon) {
+    return ElevatedButton.icon(
+      onPressed: () {},
+      icon: Icon(icon),
+      label: Text("$title"),
+      style: ElevatedButton.styleFrom(minimumSize: Size(300, 30)),
     );
   }
 }

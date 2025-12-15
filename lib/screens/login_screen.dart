@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Login Successful"),
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.teal,
             duration: Duration(seconds: 1),
           ),
         );
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
           "Login",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -81,15 +81,24 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 50),
-                const Center(
-                  child: Text(
-                    "Masroofy",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Center(
+                      child: Text(
+                        "Masroofy",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    Center(
+                      child: Image.asset("images/logo.png", width: 40, height: 40,),
+                      
+                    )
+                  ],
                 ),
                 const SizedBox(height: 50),
                 TextFormField(
@@ -146,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.teal,
                     ),
                     onPressed: _loginUser,
                     child: const Text(

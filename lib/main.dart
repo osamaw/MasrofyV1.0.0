@@ -10,6 +10,7 @@ import 'models/installment.dart';
 import 'models/income.dart';
 import 'screens/home_screen.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -43,13 +44,13 @@ void main() async {
   }
 
   var userBox = Hive.box<User>('users');
-  runApp(MasroofyApp(isLoggedIn: isLoggedIn));
+  runApp(MasroofyApp(isLoggedIn: isLoggedIn,));
 }
 
 class MasroofyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  const MasroofyApp({Key? key, required this.isLoggedIn}) : super(key: key);
+  const MasroofyApp({Key? key, required this.isLoggedIn, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,13 @@ class MasroofyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
+        appBarTheme: AppBarTheme(color: Colors.teal),
+      
       ),
+      
+     
       home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
+      
     );
   }
 }

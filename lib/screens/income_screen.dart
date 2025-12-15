@@ -107,7 +107,27 @@ class _IncomeScreenState extends State<IncomeScreen> {
                         ),
                       ),
                       onLongPress: () {
-                        income.delete();
+                        showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Delete"),
+                    content: Text("Are You Sure ?"),
+                    actions: [
+                      ElevatedButton(onPressed:  () {
+                              income.delete();
+                              Navigator.of(context).pop();
+                            }, child: Text("Yes")),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("NO"),
+                      ),
+                    ],
+                  );
+                },
+              );
                       },
                     );
                   },

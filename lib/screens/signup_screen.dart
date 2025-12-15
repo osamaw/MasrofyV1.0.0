@@ -56,7 +56,7 @@ class _SignupState extends State<Signup> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Account Created Successfully!"),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.teal,
         ),
       );
 
@@ -81,7 +81,7 @@ class _SignupState extends State<Signup> {
           "Sign Up",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -91,15 +91,24 @@ class _SignupState extends State<Signup> {
             child: Column(
               children: [
                 const SizedBox(height: 50),
-                const Center(
-                  child: Text(
-                    "Masroofy",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Center(
+                      child: Text(
+                        "Masroofy",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    Center(
+                      child: Image.asset("images/logo.png", width: 40, height: 40,),
+                      
+                    )
+                  ],
                 ),
                 const SizedBox(height: 50),
                 TextFormField(
@@ -187,7 +196,7 @@ class _SignupState extends State<Signup> {
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.teal,
                     ),
                     onPressed: _registerUser,
                     child: const Text(

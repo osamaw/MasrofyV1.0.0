@@ -66,7 +66,30 @@ class _InstallmentsScreenState extends State<InstallmentsScreen> {
                   ],
                 ),
                 onLongPress: () {
-                  installment.delete();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Delete"),
+                        content: Text("Are You Sure ?"),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              installment.delete();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Yes"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("NO"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
               );
             },
